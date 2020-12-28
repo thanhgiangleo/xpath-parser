@@ -41,21 +41,23 @@ def parse_meta():
 
 @app.route("/parse", methods=['POST'])
 def parse():
-    image_sources, video_sources, share_content, tag, author, raw_html = [], [], [], [], '', []
+    image_sources, video_sources, share_content, content, tag, author, raw_html = [], [], [], '', [], '', []
+    domain, title, description, published_time = '', '', '', ''
+    all_links, all_subs = [], []
 
     url = request.form.get('url')
     if url is None or url == '':
         raise HTTPException("url cannot be empty")
 
-    all_links = request.form.get('all_links')
-    all_subs = request.form.get('all_subs')
-    images = request.form.get('images')
-    videos = request.form.get('videos')
-    share_content = request.form.get('share_content')
-    tag = request.form.get('tag')
-    author = request.form.get('author')
-    raw_html = request.form.get('raw_html')
-    content = request.form.get('content')
+    all_links_xp = request.form.get('all_links_xp')
+    all_subs_xp = request.form.get('all_subs_xp')
+    images_xp = request.form.get('images_xp')
+    videos_xp = request.form.get('videos_xp')
+    share_content_xp = request.form.get('share_content_xp')
+    tag_xp = request.form.get('tag_xp')
+    author_xp = request.form.get('author_xp')
+    raw_html_xp = request.form.get('raw_html_xp')
+    content_xp = request.form.get('content_xp')
 
     scrapy_request = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     con = urllib.request.urlopen(scrapy_request)
@@ -63,38 +65,50 @@ def parse():
     new_response_text = fix_text(str(new_response, 'utf-8'))
     response = HtmlResponse(url=url, encoding='utf-8', body=new_response_text)
     try:
-        if all_links is not None and all_links != '':
-            all_links = response.xpath(all_links).getall()
+        domain = urlsplit(response.url).netloc
+        title, description, published_time, tag_str = parse_meta_from_tags(response.text)
 
-        if all_subs is not None and all_subs != '':
-            all_subs = response.xpath(all_subs).getall()
+        if all_links_xp is not None and all_links_xp != '':
+            all_links = response.xpath(all_links_xp).getall()
 
-        if content is not None and content != '':
-            content = "".join(response.xpath(content).getall())
+        if all_subs_xp is not None and all_subs_xp != '':
+            all_subs = response.xpath(all_subs_xp).getall()
 
-        if images is not None and images != '':
-            image_sources = response.xpath(images).getall()
+        if content_xp is not None and content_xp != '':
+            content = "".join(response.xpath(content_xp).getall())
 
-        if videos is not None and videos != '':
-            video_sources = response.xpath(videos).getall()
+        if images_xp is not None and images_xp != '':
+            image_sources = response.xpath(images_xp).getall()
 
-        if share_content is not None and share_content != '':
-            share_content = response.xpath(share_content).getall()
+        if videos_xp is not None and videos_xp != '':
+            video_sources = response.xpath(videos_xp).getall()
 
-        if tag is not None and tag != '':
-            tag = response.xpath(tag).getall()
+        if share_content_xp is not None and share_content_xp != '':
+            share_content = response.xpath(share_content_xp).getall()
 
-        if author is not None and author != '':
-            author = response.xpath(author).get()
+        if tag_xp is not None and tag_xp != '':
+            tag = response.xpath(tag_xp).getall()
 
-        if raw_html is not None and raw_html != '':
-            raw_html = response.xpath(raw_html).getall()
+        if author_xp is not None and author_xp != '':
+            author = response.xpath(author_xp).get()
+
+        if raw_html_xp is not None and raw_html_xp != '':
+            raw_html = response.xpath(raw_html_xp).getall()
+
     except Exception as e:
         print(str(e))
 
-    return render_template("home2.html", all_links=all_links, all_subs=all_subs, image_sources=image_sources,
-                           video_sources=video_sources, share_content=share_content, tag=tag,
-                           author=author, raw_html=raw_html, content=content)
+    return render_template("home2.html", raw_url=url,
+                           domain=domain, title=title, description=description, published_time=published_time,
+                           all_links=all_links, all_links_xp=all_links_xp,
+                           all_subs=all_subs, all_subs_xp=all_subs_xp,
+                           tag=tag, tag_xp=tag_xp,
+                           image_sources=image_sources, images_xp=images_xp,
+                           video_sources=video_sources, videos_xp=videos_xp,
+                           share_content=share_content, share_content_xp=share_content_xp,
+                           author=author, author_xp=author_xp,
+                           raw_html=raw_html, raw_html_xp=raw_html_xp,
+                           content=content, content_xp=content_xp)
 
 
 if __name__ == "__main__":

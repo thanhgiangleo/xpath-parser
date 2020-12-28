@@ -25,7 +25,7 @@
                     <div class="u-layout-row">
                         <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
                             <div class="u-container-layout u-valign-middle u-container-layout-2">
-                                <h1 class="u-text u-text-1">xPather tool</h1>
+                                <h1 class="u-text u-text-1">XPather tool</h1>
                                 <p class="u-text u-text-2">View instructions at <a
                                         href="https://www.freepik.com/photos/business"
                                         class="u-border-1 u-border-grey-75 u-btn u-button-style u-none u-text-body-color u-btn-1">here</a>
@@ -38,83 +38,94 @@
                                                    name="url"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
                                                    required=""
+                                                   value="{{ raw_url }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="all_links" class="u-form-control u-label">All links</label>
-                                            <input type="text" placeholder="Enter xpath here" id="all_links"
-                                                   name="all_links"
+                                            <label for="all_links_xp" class="u-form-control u-label">All links</label>
+                                            <input type="text" placeholder="Enter xpath here" id="all_links_xp"
+                                                   name="all_links_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ all_links_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="all_subs" class="u-form-control u-label">All subpaths</label>
-                                            <input type="text" placeholder="Enter xpath here" id="all_subs"
-                                                   name="all_subs"
+                                            <label for="all_subs_xp" class="u-form-control u-label">All subpaths</label>
+                                            <input type="text" placeholder="Enter xpath here" id="all_subs_xp"
+                                                   name="all_subs_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ all_subs_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="content" class="u-form-control u-label">Content</label>
-                                            <input type="text" placeholder="Enter xpath here" id="content"
-                                                   name="content"
+                                            <label for="content_xp" class="u-form-control u-label">Content</label>
+                                            <input type="text" placeholder="Enter xpath here" id="content_xp"
+                                                   name="content_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ content_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="images" class="u-form-control u-label">Images</label>
-                                            <input type="text" placeholder="Enter xpath here" id="images"
-                                                   name="images"
+                                            <label for="images_xp" class="u-form-control u-label">Images</label>
+                                            <input type="text" placeholder="Enter xpath here" id="images_xp"
+                                                   name="images_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ images_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="videos" class="u-form-control u-label">Videos</label>
-                                            <input type="text" placeholder="Enter xpath here" id="videos"
-                                                   name="videos"
+                                            <label for="videos_xp" class="u-form-control u-label">Videos</label>
+                                            <input type="text" placeholder="Enter xpath here" id="videos_xp"
+                                                   name="videos_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ videos_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="share_content" class="u-form-control u-label">Share
+                                            <label for="share_content_xp" class="u-form-control u-label">Share
                                                 content</label>
-                                            <input type="text" placeholder="Enter xpath here" id="share_content"
-                                                   name="share_content"
+                                            <input type="text" placeholder="Enter xpath here" id="share_content_xp"
+                                                   name="share_content_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ share_content_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="tag" class="u-form-control u-label">Tags</label>
-                                            <input type="text" placeholder="Enter xpath here" id="tag"
-                                                   name="tag"
+                                            <label for="tag_xp" class="u-form-control u-label">Tags</label>
+                                            <input type="text" placeholder="Enter xpath here" id="tag_xp"
+                                                   name="tag_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ tag_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="author" class="u-form-control u-label">Author</label>
-                                            <input type="text" placeholder="Enter xpath here" id="author"
-                                                   name="author"
+                                            <label for="author_xp" class="u-form-control u-label">Author</label>
+                                            <input type="text" placeholder="Enter xpath here" id="author_xp"
+                                                   name="author_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ author_xp }}"
                                             >
                                         </div>
 
                                         <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="raw_html" class="u-form-control u-label">RAW Html</label>
-                                            <input type="text" placeholder="Enter xpath here" id="raw_html"
-                                                   name="raw_html"
+                                            <label for="raw_html_xp" class="u-form-control u-label">RAW Html</label>
+                                            <input type="text" placeholder="Enter xpath here" id="raw_html_xp"
+                                                   name="raw_html_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ raw_html_xp }}"
                                             >
                                         </div>
 
-                                        <div class="u-align-left u-form-group u-form-submit u-form-group-5">
+                                        <div class="u-align-left u-form-group u-form-submit u-form-group-5"
+                                             style="margin-top: 10px">
                                             <button>GET</button>
                                         </div>
                                     </form>
@@ -123,77 +134,83 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    {% if all_links %}
-                    <p>All links: </p>
-                    <ul>
-                        {% for link in all_links %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                <div class="u-size-30">
+                    <div class="u-layout-row">
+                        <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
+                            <div class="u-container-layout u-container-layout-2" style="border: 1px solid #ccc; overflow: auto">
+                                {% if all_links %}
+                                    <p>All links: </p>
+                                    <ul>
+                                        {% for link in all_links %}
+                                            <li>{{ link }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                    {% if all_subs %}
-                    <p>All subs: </p>
-                    <ul>
-                        {% for link in all_subs %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                                {% if all_subs %}
+                                    <p>All subs: </p>
+                                    <ul>
+                                        {% for link in all_subs %}
+                                            <li>{{ link }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                    {% if image_sources %}
-                    <p>Images: </p>
-                    <ul>
-                        {% for link in image_sources %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                                {% if image_sources %}
+                                    <p>Images: </p>
+                                    <ul>
+                                        {% for link in image_sources %}
+                                            <li>{{ link }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                    {% if video_sources %}
-                    <p>Videos: </p>
-                    <ul>
-                        {% for link in video_sources %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                                {% if video_sources %}
+                                    <p>Videos: </p>
+                                    <ul>
+                                        {% for link in video_sources %}
+                                            <li>{{ link }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                    {% if share_content %}
-                    <p>Share contents: </p>
-                    <ul>
-                        {% for link in share_content %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                                {% if share_content %}
+                                    <p>Share contents: </p>
+                                    <ul>
+                                        {% for link in share_content %}
+                                            <li>{{ link }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                    {% if tag %}
-                    <p>Tags: </p>
-                    <ul>
-                        {% for item in tag %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                                {% if tag %}
+                                    <p>Tags: </p>
+                                    <ul>
+                                        {% for item in tag %}
+                                            <li>{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                    {% if author %}
-                        <p>Author: {{ author }}</p>
-                    {% endif %}
+                                {% if author %}
+                                    <p>Author: {{ author }}</p>
+                                {% endif %}
 
-                    {% if content %}
-                    <p>Content: {{ content }}</p>
-                    {% endif %}
+                                {% if content %}
+                                    <p>Content: {{ content }}</p>
+                                {% endif %}
 
-                    {% if raw_html %}
-                    <p>RAW html: </p>
-                    <ul>
-                        {% for item in raw_html %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                                {% if raw_html %}
+                                    <p>RAW html: </p>
+                                    <ul>
+                                        {% for item in raw_html %}
+                                            <li>{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
