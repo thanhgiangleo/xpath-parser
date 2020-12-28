@@ -21,7 +21,7 @@ POSTGRES = {
 
 @app.route("/", methods=['GET'])
 def hello():
-    return render_template("home2.html")
+    return render_template("home.html")
 
 
 @app.route("/parse-meta", methods=['POST'])
@@ -35,7 +35,7 @@ def parse_meta():
     title, description, published_time, tag_str = parse_meta_from_tags(response.text)
     domain = urlsplit(response.url).netloc
 
-    return render_template("home2.html", raw_url=url, domain=domain, title=title,
+    return render_template("home.html", raw_url=url, domain=domain, title=title,
                            description=description, published_time=published_time)
 
 
@@ -98,7 +98,7 @@ def parse():
     except Exception as e:
         print(str(e))
 
-    return render_template("home2.html", raw_url=url,
+    return render_template("home.html", raw_url=url,
                            domain=domain, title=title, description=description, published_time=published_time,
                            all_links=all_links, all_links_xp=all_links_xp,
                            all_subs=all_subs, all_subs_xp=all_subs_xp,

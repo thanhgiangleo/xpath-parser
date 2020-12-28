@@ -342,6 +342,12 @@ def parse_meta_from_tags(response_text):
                     if 'datePublished' in jsonLdDataItem or 'uploadDate' in jsonLdDataItem:
                         published_time = jsonLdDataItem['datePublished'] if jsonLdDataItem['datePublished'] else \
                             jsonLdDataItem['uploadDate']
+                if published_time == '' and 'uploadDate' in jsonLdDataItem:
+                    published_time = jsonLdDataItem['uploadDate']
+                if title == '' and 'name' in jsonLdDataItem:
+                    title = jsonLdDataItem['name']
+                if description == '' and 'description' in jsonLdDataItem:
+                    description = jsonLdDataItem['description']
     except Exception as e:
         print(str(e))
 
