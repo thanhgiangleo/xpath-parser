@@ -1,8 +1,67 @@
 import re
 from datetime import datetime
+from urllib.parse import urlparse
 
 from extruct import JsonLdExtractor, RDFaExtractor, OpenGraphExtractor
 from ftfy import fix_text
+
+
+def normalize_xpath(xpath):
+    if xpath.find("*") != -1:
+        xpath = xpath.replace("*", "'*'")
+    if xpath == '':
+        return ''
+    return xpath
+
+
+def normalize_url(url):
+    if url.find('https://') != -1 or url.find('http://') != -1:
+        url = url.replace('https://', '').replace('http://', '')
+    if url.find('www.') != -1:
+        url = url.replace('www.', '')
+    return url
+
+
+def normalize_tag(text):
+    if text:
+        if text.find("\r\n") != -1 or text.find("\n") != -1 or text.find("\t") != -1 or text.find("#") != -1:
+            text = text.replace("\r\n", "").replace("\n", "").replace("\t", "").replace("#", "")
+        return fix_text(text).strip()
+    return ""
+
+
+def normalize_raw_content(text):
+    if text:
+        if text.find("\r\n") != -1 or text.find("\n") != -1 or text.find("\t") != -1:
+            text = text.replace("\r\n", "").replace("\n", "").replace("\t", "")
+        if text.find(",") == len(text) - 1:
+            text = text[:-1]
+        return fix_text(text.replace("\xa0", " ")).strip()
+    return ""
+
+
+def normalize_content(text):
+    if text:
+        if text.find("\r\n") != -1 or text.find("\n") != -1:
+            text = text.replace("\r\n", "").replace("\n", "")
+        if text.find(",") == len(text) - 1:
+            text = text[:-1]
+        return fix_text(text.replace("\xa0", " ")).strip()
+    return ""
+
+
+def normalize_author_display_name(name):
+    if name:
+        if name.find(",") == len(name) - 1 or name.find("-") == len(name) - 1:
+            name = name[:-1]
+        if name.startswith('Theo'):
+            name = name.replace('Theo', '')
+        if name.find("|") != -1:
+            name = name.replace('|', '')
+        if name.find("\r\n") != -1 or name.find("\n") != -1:
+            name = name.replace("\r\n", "").replace("\n", "")
+        return fix_text(name).strip()
+    return None
 
 
 def normalize_published_date(d):
@@ -384,3 +443,91 @@ def parse_meta_from_tags(response_text):
         pubdate = normalize_published_date(published_time)
 
     return fix_text(title), fix_text(description), fix_text(pubdate), fix_text(tag)
+
+
+def normalize_whole_item(item):
+    # domain
+    domain = item['domain']
+    normalized_domain = normalize_url(item['domain'])
+    item['domain'] = normalized_domain
+
+    scheme = urlparse(item['raw_url']).scheme
+
+    # title
+    item['title'] = normalize_content(item['title'])
+
+    # content
+    item['content'] = normalize_content(item['content'])
+
+    # summary
+    item['summary'] = normalize_content(item['summary'])
+
+    # share_content
+    normalized_content = []
+    for sc_resource in item['share_content']:
+        if sc_resource == '':
+            continue
+        if sc_resource.startswith('/'):
+            sc_resource = f'{domain}{sc_resource}'
+        if 'https://' not in sc_resource and 'http://' not in sc_resource:
+            sc_resource = f'{scheme}://{sc_resource}'
+        normalized_content.append(sc_resource)
+    item['share_content'] = normalized_content
+
+    # images
+    normalized_images = []
+    for img_resource in item['image_sources']:
+        img_resource = img_resource.strip()
+        if img_resource == '':
+            continue
+        if img_resource.find(domain) != -1:
+            if img_resource.startswith('/'):
+                img_resource = f'{domain}{img_resource}'
+            if 'https://' not in img_resource and 'http://' not in img_resource:
+                img_resource = f'{scheme}://{img_resource}'
+        else:
+            if img_resource.startswith('/') or img_resource.startswith('//'):
+                img_resource = f'{scheme}:{img_resource}'
+        normalized_images.append(img_resource)
+    item['image_sources'] = normalized_images
+
+    # videos
+    normalized_videos = []
+    for vid_resource in item['video_sources']:
+        if vid_resource == '':
+            continue
+        if vid_resource.startswith('/'):
+            vid_resource = f'{domain}{vid_resource}'
+        if 'https://' not in vid_resource and 'http://' not in vid_resource:
+            vid_resource = f'{scheme}://{vid_resource}'
+        normalized_videos.append(vid_resource)
+    item['video_sources'] = normalized_videos
+
+    # author
+    author = item['author_display_name']
+    if author is None or (author and author.find("All about Football") != -1):
+        author = ''
+    item['author_display_name'] = normalize_author_display_name(author)
+
+    # raw_html
+    raw_html = []
+    raw_html_parsed = item['raw_html']
+    for raw_item in raw_html_parsed:
+        raw_item_norm = normalize_raw_content(raw_item)
+        if raw_item_norm != "":
+            raw_html.append(raw_item_norm)
+    item['raw_html'] = "".join(raw_html)
+
+    # tag
+    tag = item['tag']
+    list_tags_normalize = []
+    if tag and isinstance(tag, str):
+        list_tags = re.split('[,;]', tag)
+        for tag_item in list_tags:
+            tag_item_norm = normalize_tag(tag_item)
+            if tag_item_norm != "":
+                list_tags_normalize.append(tag_item_norm)
+
+    item['tag'] = list_tags_normalize
+
+    return item

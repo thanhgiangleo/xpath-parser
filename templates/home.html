@@ -16,6 +16,7 @@
 
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/nicepage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/functions.js') }}"></script>
 
     <link id="u-theme-google-font" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
@@ -62,6 +63,16 @@
                                                    name="all_subs_xp"
                                                    class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
                                                    value="{{ all_subs_xp }}"
+                                            >
+                                        </div>
+
+                                        <div class="u-form-address u-form-group u-form-group-3">
+                                            <label for="published_time_xp" class="u-form-control u-label">Published
+                                                Time</label>
+                                            <input type="text" placeholder="Enter xpath here" id="published_time_xp"
+                                                   name="published_time_xp"
+                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                                   value="{{ published_time_xp }}"
                                             >
                                         </div>
 
@@ -131,9 +142,11 @@
 
                                         <div class="u-align-left u-form-group u-form-submit u-form-group-5"
                                              style="margin-top: 10px">
-                                            <button>GET</button>
+                                            <button>Parse</button>
                                         </div>
                                     </form>
+                                    <button id="submitBtn" onclick="return submit();" style="margin-top: 10px">Submit
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -143,105 +156,100 @@
                     <div class="u-layout-row">
                         <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
                             <div class="u-container-layout u-container-layout-2"
-                                 style="border: 1px solid #ccc; overflow: auto">
+                                 style="border: 1px solid #000000; overflow: auto">
+                                {% if domain %}
+                                <p class="title">Domain: </p>
+                                <p>{{ domain }}</p>
+                                {% endif %}
+
+                                {% if title %}
+                                <p class="title">Title: </p>
+                                <p>{{ title }}</p>
+                                {% endif %}
+
+                                {% if description %}
+                                <p class="title">Summary: </p>
+                                <p>{{ description }}</p>
+                                {% endif %}
+
+                                {% if published_time %}
+                                <p class="title">Published time: </p>
+                                <p>{{ published_time }}</p>
+                                {% endif %}
+
                                 {% if all_links %}
-                                    <p class="title">All links: </p>
-                                    <ul>
-                                        {% for link in all_links %}
-                                            <li>{{ link }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">All links: </p>
+                                <ul>
+                                    {% for link in all_links %}
+                                    <li>{{ link }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
 
                                 {% if all_subs %}
-                                    <p class="title">All subs: </p>
-                                    <ul>
-                                        {% for link in all_subs %}
-                                            <li>{{ link }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">All subs: </p>
+                                <ul>
+                                    {% for link in all_subs %}
+                                    <li>{{ link }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
 
                                 {% if image_sources %}
-                                    <p class="title">Images: </p>
-                                    <ul>
-                                        {% for link in image_sources %}
-                                            <li>{{ link }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">Images: </p>
+                                <ul>
+                                    {% for link in image_sources %}
+                                    <li>{{ link }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
 
                                 {% if video_sources %}
-                                    <p class="title">Videos: </p>
-                                    <ul>
-                                        {% for link in video_sources %}
-                                            <li>{{ link }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">Videos: </p>
+                                <ul>
+                                    {% for link in video_sources %}
+                                    <li>{{ link }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
 
                                 {% if share_content %}
-                                    <p class="title">Share contents: </p>
-                                    <ul>
-                                        {% for link in share_content %}
-                                            <li>{{ link }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">Share contents: </p>
+                                <ul>
+                                    {% for link in share_content %}
+                                    <li>{{ link }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
 
                                 {% if tag %}
-                                    <p class="title">Tags: </p>
-                                    <ul>
-                                        {% for item in tag %}
-                                            <li>{{ item }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">Tags: </p>
+                                <ul>
+                                    {% for item in tag %}
+                                    <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
 
                                 {% if author %}
-                                    <p class="title">Author: </p>
-                                    <p>{{ author }}</p>
+                                <p class="title">Author: </p>
+                                <p>{{ author }}</p>
                                 {% endif %}
 
                                 {% if content %}
-                                    <p class="title">Content: </p>
-                                    <p>{{ content }}</p>
+                                <p class="title">Content: </p>
+                                <p>{{ content }}</p>
                                 {% endif %}
 
                                 {% if raw_html %}
-                                    <p class="title">RAW html: </p>
-                                    <ul>
-                                        {% for item in raw_html %}
-                                            <li>{{ item }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                <p class="title">RAW html: </p>
+                                <ul>
+                                    {% for item in raw_html %}
+                                    <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="u-size-30">
-                    <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
-                        <div class="u-container-layout u-container-layout-2" style="border: 1px solid #ccc">
-                            {% if domain %}
-                                <p class="title">Domain: </p>
-                                <p>{{ domain }}</p>
-                            {% endif %}
-
-                            {% if title %}
-                                <p class="title">Title: </p>
-                                <p>{{ title }}</p>
-                            {% endif %}
-
-                            {% if description %}
-                                <p class="title">Summary: </p>
-                                <p>{{ description }}</p>
-                            {% endif %}
-
-                            {% if published_time %}
-                                <p class="title">Published time: </p>
-                                <p>{{ published_time }}</p>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
