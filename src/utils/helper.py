@@ -496,6 +496,8 @@ def normalize_whole_item(item):
     for vid_resource in item['video_sources']:
         if vid_resource == '':
             continue
+        if vid_resource.startswith('//'):
+            vid_resource = vid_resource.replace('//', '')
         if vid_resource.startswith('/'):
             vid_resource = f'{domain}{vid_resource}'
         if 'https://' not in vid_resource and 'http://' not in vid_resource:
