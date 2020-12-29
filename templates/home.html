@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;">
+<html style="font-size: 16px;height: 100%" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
@@ -22,240 +22,237 @@
           href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <meta name="theme-color" content="#478ac9">
 </head>
-<body class="u-body">
-<section class="u-clearfix u-section-1" id="carousel_6c72">
-    <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
-        <div class="u-gutter-0 u-layout">
-            <div class="u-layout-row">
-                <div class="u-size-30">
-                    <div class="u-layout-row">
-                        <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
-                            <div class="u-container-layout u-valign-middle u-container-layout-2">
-                                <h1 class="u-text u-text-1">XPather tool</h1>
-                                <p class="u-text u-text-2">View instructions at <a
-                                        href="https://www.freepik.com/photos/business"
-                                        class="u-border-1 u-border-grey-75 u-btn u-button-style u-none u-text-body-color u-btn-1">here</a>
-                                </p>
-                                <div class="u-expanded-width u-form u-form-1">
-                                    <form action="{{ url_for('parse') }}" method="post" style="padding: 0;">
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="url" class="u-form-control u-label">URL</label>
-                                            <input type="text" placeholder="Enter url here" id="url"
-                                                   name="url"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   required=""
-                                                   value="{{ raw_url }}"
-                                            >
-                                        </div>
 
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="all_links_xp" class="u-form-control u-label">All links</label>
-                                            <input type="text" placeholder="Enter xpath here" id="all_links_xp"
-                                                   name="all_links_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ all_links_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="all_subs_xp" class="u-form-control u-label">All subpaths</label>
-                                            <input type="text" placeholder="Enter xpath here" id="all_subs_xp"
-                                                   name="all_subs_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ all_subs_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="published_time_xp" class="u-form-control u-label">Published
-                                                Time</label>
-                                            <input type="text" placeholder="Enter xpath here" id="published_time_xp"
-                                                   name="published_time_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ published_time_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="content_xp" class="u-form-control u-label">Content</label>
-                                            <input type="text" placeholder="Enter xpath here" id="content_xp"
-                                                   name="content_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ content_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="images_xp" class="u-form-control u-label">Images</label>
-                                            <input type="text" placeholder="Enter xpath here" id="images_xp"
-                                                   name="images_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ images_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="videos_xp" class="u-form-control u-label">Videos</label>
-                                            <input type="text" placeholder="Enter xpath here" id="videos_xp"
-                                                   name="videos_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ videos_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="share_content_xp" class="u-form-control u-label">Share
-                                                content</label>
-                                            <input type="text" placeholder="Enter xpath here" id="share_content_xp"
-                                                   name="share_content_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ share_content_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="tag_xp" class="u-form-control u-label">Tags</label>
-                                            <input type="text" placeholder="Enter xpath here" id="tag_xp"
-                                                   name="tag_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ tag_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="author_xp" class="u-form-control u-label">Author</label>
-                                            <input type="text" placeholder="Enter xpath here" id="author_xp"
-                                                   name="author_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ author_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-form-address u-form-group u-form-group-3">
-                                            <label for="raw_html_xp" class="u-form-control u-label">RAW Html</label>
-                                            <input type="text" placeholder="Enter xpath here" id="raw_html_xp"
-                                                   name="raw_html_xp"
-                                                   class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
-                                                   value="{{ raw_html_xp }}"
-                                            >
-                                        </div>
-
-                                        <div class="u-align-left u-form-group u-form-submit u-form-group-5"
-                                             style="margin-top: 10px">
-                                            <button>Parse</button>
-                                        </div>
-                                    </form>
-                                    <button id="submitBtn" onclick="return submit();" style="margin-top: 10px">Submit
-                                    </button>
-                                </div>
+<body>
+<div class="split left">
+    <div class="u-size-30">
+        <div class="u-layout-row">
+            <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
+                <div class="u-container-layout u-valign-middle u-container-layout-2">
+                    <h1 class="u-text u-text-1">XPather tool</h1>
+                    <p class="u-text u-text-2">View instructions at <a
+                            href="#">here</a>
+                    </p>
+                    <div class="u-expanded-width u-form u-form-1">
+                        <form action="{{ url_for('parse') }}" method="post" style="padding: 0;">
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="url" class="u-form-control u-label">URL</label>
+                                <input type="text" placeholder="Enter url here" id="url"
+                                       name="url"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       required=""
+                                       value="{{ raw_url }}"
+                                >
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="u-size-30">
-                    <div class="u-layout-row">
-                        <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
-                            <div class="u-container-layout u-container-layout-2"
-                                 style="border: 1px solid #000000; overflow: auto">
-                                {% if domain %}
-                                <p class="title">Domain: </p>
-                                <p>{{ domain }}</p>
-                                {% endif %}
 
-                                {% if title %}
-                                <p class="title">Title: </p>
-                                <p>{{ title }}</p>
-                                {% endif %}
-
-                                {% if description %}
-                                <p class="title">Summary: </p>
-                                <p>{{ description }}</p>
-                                {% endif %}
-
-                                {% if published_time %}
-                                <p class="title">Published time: </p>
-                                <p>{{ published_time }}</p>
-                                {% endif %}
-
-                                {% if all_links %}
-                                <p class="title">All links: </p>
-                                <ul>
-                                    {% for link in all_links %}
-                                    <li>{{ link }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-
-                                {% if all_subs %}
-                                <p class="title">All subs: </p>
-                                <ul>
-                                    {% for link in all_subs %}
-                                    <li>{{ link }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-
-                                {% if image_sources %}
-                                <p class="title">Images: </p>
-                                <ul>
-                                    {% for link in image_sources %}
-                                    <li>{{ link }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-
-                                {% if video_sources %}
-                                <p class="title">Videos: </p>
-                                <ul>
-                                    {% for link in video_sources %}
-                                    <li>{{ link }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-
-                                {% if share_content %}
-                                <p class="title">Share contents: </p>
-                                <ul>
-                                    {% for link in share_content %}
-                                    <li>{{ link }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-
-                                {% if tag %}
-                                <p class="title">Tags: </p>
-                                <ul>
-                                    {% for item in tag %}
-                                    <li>{{ item }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-
-                                {% if author %}
-                                <p class="title">Author: </p>
-                                <p>{{ author }}</p>
-                                {% endif %}
-
-                                {% if content %}
-                                <p class="title">Content: </p>
-                                <p>{{ content }}</p>
-                                {% endif %}
-
-                                {% if raw_html %}
-                                <p class="title">RAW html: </p>
-                                <ul>
-                                    {% for item in raw_html %}
-                                    <li>{{ item }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="all_links_xp" class="u-form-control u-label">All links</label>
+                                <input type="text" placeholder="Enter xpath here" id="all_links_xp"
+                                       name="all_links_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ all_links_xp }}"
+                                >
                             </div>
-                        </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="all_subs_xp" class="u-form-control u-label">All subpaths</label>
+                                <input type="text" placeholder="Enter xpath here" id="all_subs_xp"
+                                       name="all_subs_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ all_subs_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="published_time_xp" class="u-form-control u-label">Published
+                                    Time</label>
+                                <input type="text" placeholder="Enter xpath here" id="published_time_xp"
+                                       name="published_time_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ published_time_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="content_xp" class="u-form-control u-label">Content</label>
+                                <input type="text" placeholder="Enter xpath here" id="content_xp"
+                                       name="content_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ content_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="images_xp" class="u-form-control u-label">Images</label>
+                                <input type="text" placeholder="Enter xpath here" id="images_xp"
+                                       name="images_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ images_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="videos_xp" class="u-form-control u-label">Videos</label>
+                                <input type="text" placeholder="Enter xpath here" id="videos_xp"
+                                       name="videos_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ videos_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="share_content_xp" class="u-form-control u-label">Share
+                                    content</label>
+                                <input type="text" placeholder="Enter xpath here" id="share_content_xp"
+                                       name="share_content_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ share_content_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="tag_xp" class="u-form-control u-label">Tags</label>
+                                <input type="text" placeholder="Enter xpath here" id="tag_xp"
+                                       name="tag_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ tag_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="author_xp" class="u-form-control u-label">Author</label>
+                                <input type="text" placeholder="Enter xpath here" id="author_xp"
+                                       name="author_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ author_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-form-address u-form-group u-form-group-3">
+                                <label for="raw_html_xp" class="u-form-control u-label">RAW Html</label>
+                                <input type="text" placeholder="Enter xpath here" id="raw_html_xp"
+                                       name="raw_html_xp"
+                                       class="u-border-1 u-border-palette-5-base u-input u-input-rectangle u-white"
+                                       value="{{ raw_html_xp }}"
+                                >
+                            </div>
+
+                            <div class="u-align-left u-form-group u-form-submit u-form-group-5"
+                                 style="margin-top: 10px">
+                                <button>Parse</button>
+                            </div>
+                        </form>
+
+                        <button onclick="return submit();" style="margin-top: 10px">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<div class="split right">
+    <div class="u-size-30" style="overflow: auto">
+        <div class="u-layout-row">
+            <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2"
+                     style="border: 1px solid #000000; overflow: auto; padding: 20px">
+                    {% if domain %}
+                    <p class="title">Domain: </p>
+                    <p>{{ domain }}</p>
+                    {% endif %}
+
+                    {% if title %}
+                    <p class="title">Title: </p>
+                    <p>{{ title }}</p>
+                    {% endif %}
+
+                    {% if description %}
+                    <p class="title">Summary: </p>
+                    <p>{{ description }}</p>
+                    {% endif %}
+
+                    {% if published_time %}
+                    <p class="title">Published time: </p>
+                    <p>{{ published_time }}</p>
+                    {% endif %}
+
+                    {% if all_links %}
+                    <p class="title">All links: </p>
+                    <ul>
+                        {% for link in all_links %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if all_subs %}
+                    <p class="title">All subs: </p>
+                    <ul>
+                        {% for link in all_subs %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if image_sources %}
+                    <p class="title">Images: </p>
+                    <ul>
+                        {% for link in image_sources %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if video_sources %}
+                    <p class="title">Videos: </p>
+                    <ul>
+                        {% for link in video_sources %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if share_content %}
+                    <p class="title">Share contents: </p>
+                    <ul>
+                        {% for link in share_content %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if tag %}
+                    <p class="title">Tags: </p>
+                    <ul>
+                        {% for item in tag %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if author %}
+                    <p class="title">Author: </p>
+                    <p>{{ author }}</p>
+                    {% endif %}
+
+                    {% if content %}
+                    <p class="title">Content: </p>
+                    <p>{{ content }}</p>
+                    {% endif %}
+
+                    {% if raw_html %}
+                    <p class="title">RAW html: </p>
+                    <ul>
+                        {% for item in raw_html %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

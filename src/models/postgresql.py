@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import psycopg2
 
 from src.models import config
-from src.utils.helper import normalize_xpath, normalize_url
+from src.utils.helper import normalize_xpath
 
 
 class Postgresql:
@@ -33,35 +33,31 @@ class Postgresql:
             Postgresql.__instance = self
 
     def check_postgres_data(self, data):
-        list_data = data.get('domains')
-        if not list_data or len(list_data) == 0:
-            return
+        url = data['url']
+        domain = urlparse(url).netloc
+        scheme = urlparse(url).scheme
+        existed = self.get_domain_by_name(domain)
 
-        for item in list_data:
-            domain = normalize_url(item['domain'])
-            scheme = urlparse(item['domain']).scheme
-            existed = self.get_domain_by_name(domain)
-            if existed is not None:
-                print(existed)
-                self.update_domain_info(domain, item, scheme)
-            else:
-                self.insert(scheme=scheme,
-                            domain=domain,
-                            all_links=normalize_xpath(item['all_links']),
-                            all_subs=normalize_xpath(item['all_subs']),
-                            next_page=normalize_xpath(item['next_page']),
-                            content=normalize_xpath(item['content']),
-                            image_sources=normalize_xpath(item['image_sources']),
-                            video_sources=normalize_xpath(item['video_sources']),
-                            author=normalize_xpath(item['author_display_name']),
-                            tags=normalize_xpath(item['tags']),
-                            published_time=normalize_xpath(item['published_time']),
-                            share_content=normalize_xpath(item['share_content']),
-                            raw_html=normalize_xpath(item['raw_html']) if 'raw_html' in item else '')
+        if existed is not None:
+            print(existed)
+            self.update_domain_info(domain, data, scheme)
+        else:
+            self.insert(scheme=scheme,
+                        domain=domain,
+                        all_links=normalize_xpath(data['all_links']),
+                        all_subs=normalize_xpath(data['all_subs']),
+                        next_page=normalize_xpath(''),
+                        content=normalize_xpath(data['content']),
+                        image_sources=normalize_xpath(data['image_sources']),
+                        video_sources=normalize_xpath(data['video_sources']),
+                        author=normalize_xpath(data['author_display_name']),
+                        tags=normalize_xpath(data['tags']),
+                        published_time=normalize_xpath(data['published_time']),
+                        share_content=normalize_xpath(data['share_content']),
+                        raw_html=normalize_xpath(data['raw_html']) if 'raw_html' in data else '')
 
     def insert(self, scheme, domain, all_links, all_subs, next_page, content, image_sources, video_sources, author,
-               tags,
-               published_time, share_content, raw_html):
+               tags, published_time, share_content, raw_html):
         con = None
         mycursor = None
         try:

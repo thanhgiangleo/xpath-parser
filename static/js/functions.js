@@ -1,6 +1,8 @@
 function submit() {
     // get every xpath value
     let url = $('input[name=url]').val()
+    const hostname = new URL(url).hostname
+
     let all_links = $('input[name=all_links_xp]').val()
     let content = $('input[name=content_xp]').val()
     let all_subs = $('input[name=all_subs_xp]').val()
@@ -12,10 +14,11 @@ function submit() {
     let raw_html = $('input[name=raw_html_xp]').val()
 
     let payload = {
+        url: url,
         all_links: all_links,
         all_subs: all_subs,
         content: content,
-        images_source: images,
+        image_sources: images,
         video_sources: videos,
         author_display_name: author,
         tags: tag,
@@ -25,7 +28,7 @@ function submit() {
     }
 
     if (!check_valid_params(all_links, all_subs, content, images, author, raw_html)) {
-        alert("All fields must be filled")
+        alert("All required fields must be filled")
     } else {
         fetch(`${window.origin}/submit`, {
             method: 'POST',
@@ -39,7 +42,14 @@ function submit() {
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify(payload)
         })
-            .then(res => console.log("Success: " + res))
+            .then(async (res) => {
+                const response = await res.text()
+                if (response === "success") {
+                    alert(hostname + " submission success")
+                } else {
+                    alert(hostname + " submission FAILED")
+                }
+            })
             .catch(e => console.log("Error: " + e))
     }
 }

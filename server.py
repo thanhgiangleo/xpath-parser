@@ -19,9 +19,16 @@ def hello():
 
 @app.route("/submit", methods=['POST'])
 def submit_pg():
-    Postgresql.getInstance()
+    request_payload = request.json
+    if request_payload is None:
+        raise HTTPException("Bad request")
 
-    return "success"
+    try:
+        Postgresql.getInstance().check_postgres_data(request_payload)
+        return "success"
+    except Exception as err:
+        print(str(err))
+        return "failed"
 
 
 @app.route("/parse", methods=['POST'])
