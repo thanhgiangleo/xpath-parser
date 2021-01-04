@@ -17,6 +17,23 @@ def hello():
     return render_template("home.html")
 
 
+@app.route("/check_existed_domain", methods=['POST'])
+def check_existed_domain():
+    request_payload = request.json
+    if request_payload is None or request_payload['domain'] == '':
+        raise HTTPException("Bad request")
+
+    try:
+        result = Postgresql.getInstance().get_domain_by_name(request_payload['domain'])
+        return "existed" if result is not None else "Not existed"
+        # if result is not None:
+        #     return render_template("home.html", all_links_existed=result[2])
+        # return "domain not existed"
+    except Exception as err:
+        print(str(err))
+        return "failed"
+
+
 @app.route("/submit", methods=['POST'])
 def submit_pg():
     request_payload = request.json
@@ -133,4 +150,4 @@ def parse():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=5000)

@@ -145,6 +145,8 @@
                             </div>
                         </form>
 
+                        <button onclick="return check_existed_domain();" style="margin-top: 10px">Check existed domain</button>
+
                         <button onclick="return submit();" style="margin-top: 10px">Submit</button>
                     </div>
                 </div>
@@ -155,97 +157,97 @@
 
 <div class="split right">
     <div class="u-size-30" style="overflow: auto">
-        <div class="u-layout-row">
+        <div class="row">
             <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2"
                      style="border: 1px solid #000000; overflow: auto; padding: 20px">
                     {% if domain %}
-                        <p class="title">Domain: </p>
-                        <p>{{ domain }}</p>
+                    <p class="title">Domain: </p>
+                    <p>{{ domain }}</p>
                     {% endif %}
 
                     {% if title %}
-                        <p class="title">Title: </p>
-                        <p>{{ title }}</p>
+                    <p class="title">Title: </p>
+                    <p>{{ title }}</p>
                     {% endif %}
 
                     {% if description %}
-                        <p class="title">Summary: </p>
-                        <p>{{ description }}</p>
+                    <p class="title">Summary: </p>
+                    <p>{{ description }}</p>
                     {% endif %}
 
                     {% if published_time %}
-                        <p class="title">Published time: </p>
-                        <p>{{ published_time }}</p>
+                    <p class="title">Published time: </p>
+                    <p>{{ published_time }}</p>
                     {% endif %}
 
                     {% if all_links %}
-                        <p class="title">All links: </p>
-                        <ul>
-                            {% for link in all_links %}
-                                <li>{{ link }}</li>
-                            {% endfor %}
-                        </ul>
+                    <p class="title">All links: </p>
+                    <ul>
+                        {% for link in all_links %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
 
                     {% if all_subs %}
-                        <p class="title">All subs: </p>
-                        <ul>
-                            {% for link in all_subs %}
-                                <li>{{ link }}</li>
-                            {% endfor %}
-                        </ul>
+                    <p class="title">All subs: </p>
+                    <ul>
+                        {% for link in all_subs %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
 
                     {% if image_sources %}
-                        <p class="title">Images: </p>
-                        <ul>
-                            {% for link in image_sources %}
-                                <li>{{ link }}</li>
-                            {% endfor %}
-                        </ul>
+                    <p class="title">Images: </p>
+                    <ul>
+                        {% for link in image_sources %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
 
                     {% if video_sources %}
-                        <p class="title">Videos: </p>
-                        <ul>
-                            {% for link in video_sources %}
-                                <li>{{ link }}</li>
-                            {% endfor %}
-                        </ul>
+                    <p class="title">Videos: </p>
+                    <ul>
+                        {% for link in video_sources %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
 
                     {% if share_content %}
-                        <p class="title">Share contents: </p>
-                        <ul>
-                            {% for link in share_content %}
-                                <li>{{ link }}</li>
-                            {% endfor %}
-                        </ul>
+                    <p class="title">Share contents: </p>
+                    <ul>
+                        {% for link in share_content %}
+                        <li>{{ link }}</li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
 
                     {% if tag %}
-                        <p class="title">Tags: </p>
-                        <ul>
-                            {% for item in tag %}
-                                <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
+                    <p class="title">Tags: </p>
+                    <ul>
+                        {% for item in tag %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
 
                     {% if author %}
-                        <p class="title">Author: </p>
-                        <p>{{ author }}</p>
+                    <p class="title">Author: </p>
+                    <p>{{ author }}</p>
                     {% endif %}
 
                     {% if content %}
-                        <p class="title">Content: </p>
-                        <p>{{ content }}</p>
+                    <p class="title">Content: </p>
+                    <p>{{ content }}</p>
                     {% endif %}
 
                     {% if raw_html %}
-                        <p class="title">RAW html: </p>
-                        <p>{{ raw_html }}</p>
+                    <p class="title">RAW html: </p>
+                    <p>{{ raw_html }}</p>
                     {% endif %}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-function submit() {
+const submit = () => {
     // get every xpath value
     let url = $('input[name=url]').val()
     const hostname = new URL(url).hostname
@@ -56,6 +56,31 @@ function submit() {
     }
 }
 
-function check_valid_params(a, b, c, d, e, f) {
-    return a !== '' && b !== '' && c !== '' && d !== '' && e !== '' && f !== ''
+const check_valid_params =(a, b, c, d, e, f) => a !== '' && b !== '' && c !== '' && d !== '' && e !== '' && f !== ''
+
+const check_existed_domain = () => {
+    let url = $('input[name=url]').val()
+    const hostname = new URL(url).hostname
+
+    fetch(`${window.origin}/check_existed_domain`, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({ domain: hostname })
+    })
+        .then(async (res) => {
+            const response = await res.text()
+            if (response === "existed") {
+                alert(hostname + " existed")
+            } else {
+                alert(hostname + " NOT existed")
+            }
+        })
+        .catch(e => console.log("Error: " + e))
 }
