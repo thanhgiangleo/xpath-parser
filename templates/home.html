@@ -30,9 +30,11 @@
             <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-white u-layout-cell-2">
                 <div class="u-container-layout u-valign-middle u-container-layout-2">
                     <h1 class="u-text u-text-1">XPather tool</h1>
-                    <p class="u-text">Xem hướng dẫn tại <a href="#">đây</a> - <a target="_blank"
-                                                                                 href="https://devhints.io/xpath">Tài
-                        liệu xpath</a></p>
+                    <p class="u-text">Xem hướng dẫn tại <a
+                            href="https://docs.google.com/document/d/1-LZZXF7OBHdMp-7Xpq47ygaeHOLl_E6xIGEk8-jkUFg">đây</a>
+                        - <a target="_blank"
+                             href="https://devhints.io/xpath">Tài
+                            liệu xpath</a></p>
                     <div class="u-expanded-width u-form u-form-1">
                         <form action="{{ url_for('parse') }}" method="post" style="padding: 0;">
                             <div class="u-form-address u-form-group u-form-group-3">
@@ -158,92 +160,92 @@
                 <div class="u-container-layout u-container-layout-2"
                      style="border: 1px solid #000000; overflow: auto; padding: 20px">
                     {% if domain %}
-                    <p class="title">Domain: </p>
-                    <p>{{ domain }}</p>
+                        <p class="title">Domain: </p>
+                        <p>{{ domain }}</p>
                     {% endif %}
 
                     {% if title %}
-                    <p class="title">Title: </p>
-                    <p>{{ title }}</p>
+                        <p class="title">Title: </p>
+                        <p>{{ title }}</p>
                     {% endif %}
 
                     {% if description %}
-                    <p class="title">Summary: </p>
-                    <p>{{ description }}</p>
+                        <p class="title">Summary: </p>
+                        <p>{{ description }}</p>
                     {% endif %}
 
                     {% if published_time %}
-                    <p class="title">Published time: </p>
-                    <p>{{ published_time }}</p>
+                        <p class="title">Published time: </p>
+                        <p>{{ published_time }}</p>
                     {% endif %}
 
                     {% if all_links %}
-                    <p class="title">All links: </p>
-                    <ul>
-                        {% for link in all_links %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
+                        <p class="title">All links: </p>
+                        <ul>
+                            {% for link in all_links %}
+                                <li>{{ link }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if all_subs %}
-                    <p class="title">All subs: </p>
-                    <ul>
-                        {% for link in all_subs %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
+                        <p class="title">All subs: </p>
+                        <ul>
+                            {% for link in all_subs %}
+                                <li>{{ link }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if image_sources %}
-                    <p class="title">Images: </p>
-                    <ul>
-                        {% for link in image_sources %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
+                        <p class="title">Images: </p>
+                        <ul>
+                            {% for link in image_sources %}
+                                <li>{{ link }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if video_sources %}
-                    <p class="title">Videos: </p>
-                    <ul>
-                        {% for link in video_sources %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
+                        <p class="title">Videos: </p>
+                        <ul>
+                            {% for link in video_sources %}
+                                <li>{{ link }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if share_content %}
-                    <p class="title">Share contents: </p>
-                    <ul>
-                        {% for link in share_content %}
-                        <li>{{ link }}</li>
-                        {% endfor %}
-                    </ul>
+                        <p class="title">Share contents: </p>
+                        <ul>
+                            {% for link in share_content %}
+                                <li>{{ link }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if tag %}
-                    <p class="title">Tags: </p>
-                    <ul>
-                        {% for item in tag %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
+                        <p class="title">Tags: </p>
+                        <ul>
+                            {% for item in tag %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if author %}
-                    <p class="title">Author: </p>
-                    <p>{{ author }}</p>
+                        <p class="title">Author: </p>
+                        <p>{{ author }}</p>
                     {% endif %}
 
                     {% if content %}
-                    <p class="title">Content: </p>
-                    <p>{{ content }}</p>
+                        <p class="title">Content: </p>
+                        <p>{{ content }}</p>
                     {% endif %}
 
                     {% if raw_html %}
-                    <p class="title">RAW html: </p>
-                    <p>{{ raw_html }}</p>
+                        <p class="title">RAW html: </p>
+                        <p>{{ raw_html }}</p>
                     {% endif %}
                 </div>
             </div>

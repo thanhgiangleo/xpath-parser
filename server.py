@@ -33,7 +33,7 @@ def submit_pg():
 
 @app.route("/parse", methods=['POST'])
 def parse():
-    image_sources, video_sources, share_content, content, tag, author, raw_html = [], [], [], '', [], '', []
+    image_sources, video_sources, share_content, content, tag, author, raw_html = [], [], [], '', '', '', []
     domain, title, description, published_time = '', '', '', ''
     all_links, all_subs = [], []
 
@@ -89,7 +89,7 @@ def parse():
             share_content = response.xpath(share_content_xp).getall()
 
         if tag_xp is not None and tag_xp != '':
-            tag = response.xpath(tag_xp).getall()
+            tag = ",".join(response.xpath(tag_xp).getall())
 
         if author_xp is not None and author_xp != '':
             author = response.xpath(author_xp).get()

@@ -12,17 +12,19 @@ function submit() {
     let tag = $('input[name=tag_xp]').val()
     let author = $('input[name=author_xp]').val()
     let raw_html = $('input[name=raw_html_xp]').val()
+    let published_time = $('input[name=published_time_xp]').val()
 
     let payload = {
         url: url,
         all_links: all_links,
         all_subs: all_subs,
         content: content,
+        next_page: '',
         image_sources: images,
         video_sources: videos,
         author_display_name: author,
         tags: tag,
-        published_time: '',
+        published_time: published_time,
         share_content: share_content,
         raw_html: raw_html
     }

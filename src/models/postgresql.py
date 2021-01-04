@@ -46,7 +46,7 @@ class Postgresql:
                         domain=domain,
                         all_links=normalize_xpath(data['all_links']),
                         all_subs=normalize_xpath(data['all_subs']),
-                        next_page=normalize_xpath(''),
+                        next_page=normalize_xpath(data['next_page']),
                         content=normalize_xpath(data['content']),
                         image_sources=normalize_xpath(data['image_sources']),
                         video_sources=normalize_xpath(data['video_sources']),
@@ -108,11 +108,11 @@ class Postgresql:
             mycursor = con.cursor()
 
             update_query = """
-                UPDATE crawler.domain SET all_links=%s,all_subs=%s,next_page=%s,content=%s,image_sources=%s,
+                UPDATE crawler.domain SET all_links=%s,all_subs=%s,content=%s,image_sources=%s,
                 video_sources=%s,author_display_name=%s,tags=%s,published_time=%s,share_content=%s,raw_html=%s,scheme=%s
                 WHERE domain LIKE %s
             """
-            record_to_update = (xpaths['all_links'], xpaths['all_subs'], xpaths['next_page'], xpaths['content'],
+            record_to_update = (xpaths['all_links'], xpaths['all_subs'], xpaths['content'],
                                 xpaths['image_sources'], xpaths['video_sources'], xpaths['author_display_name'],
                                 xpaths['tags'], xpaths['published_time'], xpaths['share_content'], xpaths['raw_html'],
                                 scheme, name)

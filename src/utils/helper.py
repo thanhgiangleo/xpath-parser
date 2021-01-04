@@ -132,13 +132,22 @@ def normalize_published_date(d):
                                 "%Y/%m/%d %H:%M:%S")
                             return date_time_obj
                         except:
-                            # Thứ Ba, 08/12/2020 2:51 CH
-                            date_str = split3[2].strip()
-                            time_str = split3[3].strip() + ":00"
-                            date_time_str = date_str + " " + time_str
-                            date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
-                                "%Y/%m/%d %H:%M:%S")
-                            return date_time_obj
+                            try:
+                                # Thứ tư, 06/09/2017 | 07:25
+                                date_str = split3[2].strip()
+                                time_str = split3[4].strip() + ":00"
+                                date_time_str = date_str + " " + time_str
+                                date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                                    "%Y/%m/%d %H:%M:%S")
+                                return date_time_obj
+                            except:
+                                # Thứ Ba, 08/12/2020 2:51 CH
+                                date_str = split3[2].strip()
+                                time_str = split3[3].strip() + ":00"
+                                date_time_str = date_str + " " + time_str
+                                date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                                    "%Y/%m/%d %H:%M:%S")
+                                return date_time_obj
                     elif len(split3) == 10:
                         # Thứ sáu, ngày 27 tháng 11 năm 2020 | 12:0
                         date_str = (split3[3] + "/" + split3[5] + "/" + split3[7]).strip()
@@ -181,6 +190,27 @@ def normalize_published_date(d):
                             date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
                                 "%Y/%m/%d %H:%M:%S")
                             return date_time_obj
+            elif len(split2) == 3:
+                try:
+                    # 17:03:00 - Thứ 2, 07/12/2020                     |
+                    date_str = split[1].replace("|", "").strip()
+                    time_str = split[0][:8]
+                    date_time_str = date_str + " " + time_str
+                    date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+                    return date_time_obj
+                except Exception as e:
+                    print(str(e))
+                    try:
+                        # Chủ nhật, 03.01.2021 | 10:00:41
+                        split3 = split[1].split("|")
+                        date_str = split3[0].strip()
+                        time_str = split3[1].strip()
+                        date_time_str = date_str + " " + time_str
+                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                            "%Y/%m/%d %H:%M:%S")
+                        return date_time_obj
+                    except Exception as e:
+                        print(str(e))
             else:
                 try:
                     # Thứ Bảy, ngày 31/10/2020 19:40 PM (GMT+7)
@@ -257,6 +287,16 @@ def normalize_published_date(d):
                     date_time_obj = datetime.strptime(date_time_str, "%d-%m-%Y %H:%M:%S").strftime(
                         "%Y/%m/%d %H:%M:%S")
                     return date_time_obj
+                elif len(split3) == 1:
+                    # 22:00 | 01/01/2021 |
+                    split4 = d.split("|")
+                    if len(split4) == 3:
+                        date_str = split4[1].strip()
+                        time_str = split4[0].strip() + ":00"
+                        date_time_str = date_str + " " + time_str
+                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                            "%Y/%m/%d %H:%M:%S")
+                        return date_time_obj
                 else:
                     # Thứ Hai 02/11/2020 18:10(GMT+7)
                     date_str = (split2[2]).strip()
@@ -293,12 +333,20 @@ def normalize_published_date(d):
                                 "%Y/%m/%d %H:%M:%S")
                             return date_time_obj
                         except:
-                            date_str = split2[0].strip()
-                            time_str = split2[1].strip() + ":00"
-                            date_time_str = date_str + " " + time_str
-                            date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S") \
-                                .strftime("%Y/%m/%d %H:%M:%S")
-                            return date_time_obj
+                            try:
+                                date_str = split2[0].strip()
+                                time_str = split2[1].strip() + ":00"
+                                date_time_str = date_str + " " + time_str
+                                date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S") \
+                                    .strftime("%Y/%m/%d %H:%M:%S")
+                                return date_time_obj
+                            except:
+                                date_str = split2[0].strip()
+                                time_str = split2[2].strip() + ":00"
+                                date_time_str = date_str + " " + time_str
+                                date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S") \
+                                    .strftime("%Y/%m/%d %H:%M:%S")
+                                return date_time_obj
             elif len(split2) == 2:
                 split3 = d.split(":")
                 if len(split3) == 2:
