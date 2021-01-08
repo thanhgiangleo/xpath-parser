@@ -26,10 +26,7 @@ def check_existed_domain():
 
     try:
         result = Postgresql.getInstance().get_domain_by_name(request_payload['domain'])
-        return "existed" if result is not None else "Not existed"
-        # if result is not None:
-        #     return render_template("home.html", all_links_existed=result[2])
-        # return "domain not existed"
+        return "existed" if result is not None and result[2] is not None and result[3] is not None else "Not existed"
     except Exception as err:
         print(str(err))
         return "failed"
