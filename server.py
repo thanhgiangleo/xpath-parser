@@ -96,6 +96,12 @@ def parse():
                     time = " ".join(parsed)
                     published_time = normalize_published_date(time.strip())
 
+        try:
+            datetime.strptime(published_time + " 00:00:00", "%d-%m-%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+            published_time = published_time + " 00:00:00"
+        except:
+            published_time = ''
+
         if all_links_xp is not None and all_links_xp != '':
             all_links = response.xpath(all_links_xp).getall()
 

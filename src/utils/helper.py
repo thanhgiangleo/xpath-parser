@@ -341,12 +341,21 @@ def normalize_published_date(d):
                                     .strftime("%Y/%m/%d %H:%M:%S")
                                 return date_time_obj
                             except:
-                                date_str = split2[0].strip()
-                                time_str = split2[2].strip() + ":00"
-                                date_time_str = date_str + " " + time_str
-                                date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S") \
-                                    .strftime("%Y/%m/%d %H:%M:%S")
-                                return date_time_obj
+                                try:
+                                    date_str = split2[0].strip()
+                                    time_str = split2[2].strip() + ":00"
+                                    date_time_str = date_str + " " + time_str
+                                    date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S") \
+                                        .strftime("%Y/%m/%d %H:%M:%S")
+                                    return date_time_obj
+                                except:
+                                    # 17:26 08/01/2021 GMT+7
+                                    time_str = split2[0].strip() + ":00"
+                                    date_str = split2[1].strip()
+                                    date_time_str = date_str + " " + time_str
+                                    date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S") \
+                                        .strftime("%Y/%m/%d %H:%M:%S")
+                                    return date_time_obj
             elif len(split2) == 2:
                 split3 = d.split(":")
                 if len(split3) == 2:
