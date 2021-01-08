@@ -1,4 +1,5 @@
 import urllib
+from datetime import datetime
 from http.client import HTTPException
 from urllib.parse import urlsplit
 
@@ -77,6 +78,17 @@ def parse():
     try:
         domain = urlsplit(response.url).netloc
         title, description, published_time, tag_str = parse_meta_from_tags(response.text)
+
+        if published_time == '':
+            time = response.xpath("//meta[@property='article:published_time']/@content").get()
+            published_time = normalize_published_date(time)
+            try:
+                datetime.strptime(published_time, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+            except:
+                try:
+                    datetime.strptime(published_time, "%Y/%m/%d %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+                except:
+                    published_time = ''
 
         if published_time == '' and published_time_xp is not None and published_time_xp != '':
             parsed = response.xpath(published_time_xp).getall()
