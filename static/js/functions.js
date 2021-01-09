@@ -1,5 +1,4 @@
 const submit = () => {
-    // get every xpath value
     let url = $('input[name=url]').val()
     const hostname = new URL(url).hostname
 
@@ -29,31 +28,27 @@ const submit = () => {
         raw_html: raw_html
     }
 
-    if (!check_valid_params(all_links, all_subs, content, images, author, raw_html)) {
-        alert("All required fields must be filled")
-    } else {
-        fetch(`${window.origin}/submit`, {
-            method: 'POST',
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(payload)
+    fetch(`${window.origin}/submit`, {
+        method: 'POST',
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(payload)
+    })
+        .then(async (res) => {
+            const response = await res.text()
+            if (response === "success") {
+                alert(hostname + " submission success")
+            } else {
+                alert(hostname + " submission FAILED")
+            }
         })
-            .then(async (res) => {
-                const response = await res.text()
-                if (response === "success") {
-                    alert(hostname + " submission success")
-                } else {
-                    alert(hostname + " submission FAILED")
-                }
-            })
-            .catch(e => console.log("Error: " + e))
-    }
+        .catch(e => console.log("Error: " + e))
 }
 
 const check_valid_params =(a, b, c, d, e, f) => a !== '' && b !== '' && c !== '' && d !== '' && e !== '' && f !== ''

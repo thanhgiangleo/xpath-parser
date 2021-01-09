@@ -2,6 +2,7 @@ import sys
 from urllib.parse import urlparse
 
 import psycopg2
+from psycopg2 import sql
 
 from src.models import config
 from src.utils.helper import normalize_xpath
@@ -39,8 +40,11 @@ class Postgresql:
         existed = self.get_domain_by_name(domain)
 
         if existed is not None:
-            print(existed)
-            self.update_domain_info(domain, data, scheme)
+            for item in data:
+                if item == 'url':
+                    continue
+                if data[item] != '':
+                    self.update_domain(domain, item, data[item])
         else:
             self.insert(scheme=scheme,
                         domain=domain,
@@ -99,6 +103,32 @@ class Postgresql:
             if con is not None:
                 con.close()
         return result
+
+    def update_domain(self, name, field, data):
+        con = None
+        mycursor = None
+        try:
+            con = psycopg2.connect(self.connection_str)
+            mycursor = con.cursor()
+
+            sql_query = sql.SQL("UPDATE crawler.domain SET {data} WHERE domain LIKE '%{key}%'").format(
+                data=sql.Composed([sql.SQL(field), sql.SQL(" = "), sql.Literal(normalize_xpath(data))]),
+                key=sql.SQL(name)
+            )
+            # print(sql_query.as_string(con))
+            mycursor.execute(sql_query)
+            con.commit()
+
+            row_count = mycursor.rowcount
+            print(f"{row_count} has been updated - domain {name} - field {field}")
+
+        except Exception as error:
+            print(error)
+        finally:
+            if mycursor is not None:
+                mycursor.close()
+            if con is not None:
+                con.close()
 
     def update_domain_info(self, name, xpaths, scheme):
         con = None
