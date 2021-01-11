@@ -455,44 +455,46 @@ def parse_meta_from_tags(response_text):
                     if ogDataSubItem[0] == 'og:description':
                         description = ogDataSubItem[1]
 
-    if title == '' and description == '' and published_time == '':
-        jsonLdExt = JsonLdExtractor()
-        try:
-            jsonLdData = jsonLdExt.extract(htmlstring=response_text)
-            if jsonLdData and len(jsonLdData) > 0:
-                for jsonLdDataItem in jsonLdData:
-                    if '@type' not in jsonLdDataItem:
-                        continue
-                    if jsonLdDataItem['@type'] == 'NewsArticle' or jsonLdDataItem['@type'] == 'Article':
-                        if 'headline' in jsonLdDataItem:
-                            title = jsonLdDataItem['headline']
-                        if 'description' in jsonLdDataItem:
-                            description = jsonLdDataItem['description']
-                        if 'datePublished' in jsonLdDataItem or 'uploadDate' in jsonLdDataItem:
-                            published_time = jsonLdDataItem['datePublished'] if jsonLdDataItem['datePublished'] else \
-                                jsonLdDataItem['uploadDate']
-                    if published_time == '' and 'uploadDate' in jsonLdDataItem:
-                        published_time = jsonLdDataItem['uploadDate']
-                    if title == '' and 'name' in jsonLdDataItem:
-                        title = jsonLdDataItem['name']
+    jsonLdExt = JsonLdExtractor()
+    try:
+        jsonLdData = jsonLdExt.extract(htmlstring=response_text)
+        if jsonLdData and len(jsonLdData) > 0:
+            for jsonLdDataItem in jsonLdData:
+                if '@graph' in jsonLdDataItem:
+                    jsonLdDataItem = jsonLdDataItem['@graph'][0]
+                elif '@type' not in jsonLdDataItem:
+                    continue
+
+                if jsonLdDataItem['@type'] == 'NewsArticle' or jsonLdDataItem['@type'] == 'Article' or jsonLdDataItem[
+                    '@type'] == 'BlogPosting':
+                    if title == '' and 'headline' in jsonLdDataItem:
+                        title = jsonLdDataItem['headline']
                     if description == '' and 'description' in jsonLdDataItem:
                         description = jsonLdDataItem['description']
-        except Exception as e:
-            print(str(e))
+                    if published_time == '' and 'datePublished' in jsonLdDataItem or 'uploadDate' in jsonLdDataItem:
+                        published_time = jsonLdDataItem['datePublished'] if jsonLdDataItem['datePublished'] else \
+                            jsonLdDataItem['uploadDate']
+                if published_time == '' and 'uploadDate' in jsonLdDataItem:
+                    published_time = jsonLdDataItem['uploadDate']
+                if title == '' and 'name' in jsonLdDataItem:
+                    title = jsonLdDataItem['name']
+                if description == '' and 'description' in jsonLdDataItem:
+                    description = jsonLdDataItem['description']
+    except Exception as e:
+        print(str(e))
 
-    if title == '' and description == '' and published_time == '':
-        rdfaExt = RDFaExtractor()
-        rdfaData = rdfaExt.extract(htmlstring=response_text)
-        if rdfaData and len(rdfaData) > 0:
-            for rdfaDataItem in rdfaData:
-                if 'http://ogp.me/ns#description' in rdfaDataItem:
-                    description = rdfaDataItem['http://ogp.me/ns#description'][0]['@value']
-                if 'http://ogp.me/ns#title' in rdfaDataItem:
-                    title = rdfaDataItem['http://ogp.me/ns#title'][0]['@value']
-                if 'http://ogp.me/ns/article#published_time' in rdfaDataItem:
-                    published_time = rdfaDataItem['http://ogp.me/ns/article#published_time'][0]['@value']
-                if 'http://ogp.me/ns/article#tag' in rdfaDataItem:
-                    tag = rdfaDataItem['http://ogp.me/ns/article#tag'][0]['@value']
+    rdfaExt = RDFaExtractor()
+    rdfaData = rdfaExt.extract(htmlstring=response_text)
+    if rdfaData and len(rdfaData) > 0:
+        for rdfaDataItem in rdfaData:
+            if description == '' and 'http://ogp.me/ns#description' in rdfaDataItem:
+                description = rdfaDataItem['http://ogp.me/ns#description'][0]['@value']
+            if title == '' and 'http://ogp.me/ns#title' in rdfaDataItem:
+                title = rdfaDataItem['http://ogp.me/ns#title'][0]['@value']
+            if published_time == '' and 'http://ogp.me/ns/article#published_time' in rdfaDataItem:
+                published_time = rdfaDataItem['http://ogp.me/ns/article#published_time'][0]['@value']
+            if 'http://ogp.me/ns/article#tag' in rdfaDataItem:
+                tag = rdfaDataItem['http://ogp.me/ns/article#tag'][0]['@value']
 
     if published_time != '' and len(published_time) > 10:
         # catch len(pubdate) > 10 for the case %Y-%M-%d only
