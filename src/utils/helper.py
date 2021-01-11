@@ -209,8 +209,17 @@ def normalize_published_date(d):
                         date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
                             "%Y/%m/%d %H:%M:%S")
                         return date_time_obj
-                    except Exception as e:
-                        print(str(e))
+                    except:
+                        try:
+                            # Ngày đăng: 11-01-2021, 04:00
+                            date_str = split2[1][:11].strip()
+                            time_str = split[1].strip() + ":00"
+                            date_time_str = date_str + " " + time_str
+                            date_time_obj = datetime.strptime(date_time_str, "%d-%m-%Y %H:%M:%S").strftime(
+                                "%Y/%m/%d %H:%M:%S")
+                            return date_time_obj
+                        except Exception as e:
+                            print(str(e))
             else:
                 try:
                     # Thứ Bảy, ngày 31/10/2020 19:40 PM (GMT+7)
