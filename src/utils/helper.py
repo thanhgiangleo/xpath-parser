@@ -442,30 +442,43 @@ def parse_meta_from_tags(response_text):
         response_text = response_text.replace("\n", "").replace("},    </script>", "}    </script>")
 
     response_text = re.sub(r'("[\s\w]*)"([\s\w]*")', r"\1\'\2", response_text)
+    ogExt = OpenGraphExtractor()
+    ogData = ogExt.extract(htmlstring=response_text)
+    if ogData and len(ogData) > 0:
+        for ogDataItem in ogData:
+            if 'properties' not in ogDataItem:
+                continue
+            if len(ogDataItem['properties']) > 0:
+                for ogDataSubItem in ogDataItem['properties']:
+                    if ogDataSubItem[0] == 'og:title':
+                        title = ogDataSubItem[1]
+                    if ogDataSubItem[0] == 'og:description':
+                        description = ogDataSubItem[1]
 
-    jsonLdExt = JsonLdExtractor()
-    try:
-        jsonLdData = jsonLdExt.extract(htmlstring=response_text)
-        if jsonLdData and len(jsonLdData) > 0:
-            for jsonLdDataItem in jsonLdData:
-                if '@type' not in jsonLdDataItem:
-                    continue
-                if jsonLdDataItem['@type'] == 'NewsArticle' or jsonLdDataItem['@type'] == 'Article':
-                    if 'headline' in jsonLdDataItem:
-                        title = jsonLdDataItem['headline']
-                    if 'description' in jsonLdDataItem:
+    if title == '' and description == '' and published_time == '':
+        jsonLdExt = JsonLdExtractor()
+        try:
+            jsonLdData = jsonLdExt.extract(htmlstring=response_text)
+            if jsonLdData and len(jsonLdData) > 0:
+                for jsonLdDataItem in jsonLdData:
+                    if '@type' not in jsonLdDataItem:
+                        continue
+                    if jsonLdDataItem['@type'] == 'NewsArticle' or jsonLdDataItem['@type'] == 'Article':
+                        if 'headline' in jsonLdDataItem:
+                            title = jsonLdDataItem['headline']
+                        if 'description' in jsonLdDataItem:
+                            description = jsonLdDataItem['description']
+                        if 'datePublished' in jsonLdDataItem or 'uploadDate' in jsonLdDataItem:
+                            published_time = jsonLdDataItem['datePublished'] if jsonLdDataItem['datePublished'] else \
+                                jsonLdDataItem['uploadDate']
+                    if published_time == '' and 'uploadDate' in jsonLdDataItem:
+                        published_time = jsonLdDataItem['uploadDate']
+                    if title == '' and 'name' in jsonLdDataItem:
+                        title = jsonLdDataItem['name']
+                    if description == '' and 'description' in jsonLdDataItem:
                         description = jsonLdDataItem['description']
-                    if 'datePublished' in jsonLdDataItem or 'uploadDate' in jsonLdDataItem:
-                        published_time = jsonLdDataItem['datePublished'] if jsonLdDataItem['datePublished'] else \
-                            jsonLdDataItem['uploadDate']
-                if published_time == '' and 'uploadDate' in jsonLdDataItem:
-                    published_time = jsonLdDataItem['uploadDate']
-                if title == '' and 'name' in jsonLdDataItem:
-                    title = jsonLdDataItem['name']
-                if description == '' and 'description' in jsonLdDataItem:
-                    description = jsonLdDataItem['description']
-    except Exception as e:
-        print(str(e))
+        except Exception as e:
+            print(str(e))
 
     if title == '' and description == '' and published_time == '':
         rdfaExt = RDFaExtractor()
@@ -480,20 +493,6 @@ def parse_meta_from_tags(response_text):
                     published_time = rdfaDataItem['http://ogp.me/ns/article#published_time'][0]['@value']
                 if 'http://ogp.me/ns/article#tag' in rdfaDataItem:
                     tag = rdfaDataItem['http://ogp.me/ns/article#tag'][0]['@value']
-
-    if title == '' and description == '' and published_time == '':
-        ogExt = OpenGraphExtractor()
-        ogData = ogExt.extract(htmlstring=response_text)
-        if ogData and len(ogData) > 0:
-            for ogDataItem in ogData:
-                if 'properties' not in ogDataItem:
-                    continue
-                if len(ogDataItem['properties']) > 0:
-                    for ogDataSubItem in ogDataItem['properties']:
-                        if ogDataSubItem[0] == 'og:title':
-                            title = ogDataSubItem[1]
-                        if ogDataSubItem[0] == 'og:description':
-                            description = ogDataSubItem[1]
 
     if published_time != '' and len(published_time) > 10:
         # catch len(pubdate) > 10 for the case %Y-%M-%d only
