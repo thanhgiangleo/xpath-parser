@@ -72,21 +72,28 @@ def parse():
     new_response = con.read()
     new_response_text = fix_text(str(new_response, 'utf-8'))
     response = HtmlResponse(url=url, encoding='utf-8', body=new_response_text)
-    try:
-        domain = urlsplit(response.url).netloc
-        title, description, published_time, tag_str = parse_meta_from_tags(response.text)
 
-        if published_time == '':
-            time = response.xpath("//meta[@property='article:published_time']/@content").get()
-            published_time = normalize_published_date(time)
+    domain = urlsplit(response.url).netloc
+    title, description, published_time, tag_str = parse_meta_from_tags(response.text)
+
+    if title == '':
+        title = response.xpath("//title/text()").get()
+    if description == '':
+        description = response.xpath("//meta[@name='description']/@content").get()
+
+    if published_time == '':
+        time = response.xpath(
+            "//meta[@name='article:published_time' or @property='article:published_time']/@content").get()
+        published_time = normalize_published_date(time)
+        try:
+            datetime.strptime(published_time, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+        except:
             try:
-                datetime.strptime(published_time, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+                datetime.strptime(published_time, "%Y/%m/%d %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
             except:
-                try:
-                    datetime.strptime(published_time, "%Y/%m/%d %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
-                except:
-                    published_time = ''
+                published_time = ''
 
+    try:
         if published_time == '' and published_time_xp is not None and published_time_xp != '':
             parsed = response.xpath(published_time_xp).getall()
             if parsed:
@@ -95,42 +102,42 @@ def parse():
                 elif len(parsed) > 1:
                     time = " ".join(parsed)
                     published_time = normalize_published_date(time.strip())
-
-        try:
-            datetime.strptime(published_time + " 00:00:00", "%d-%m-%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
-            published_time = published_time + " 00:00:00"
-        except Exception as e:
-            print("Parse : " + str(e))
-
-        if all_links_xp is not None and all_links_xp != '':
-            all_links = response.xpath(all_links_xp).getall()
-
-        if all_subs_xp is not None and all_subs_xp != '':
-            all_subs = response.xpath(all_subs_xp).getall()
-
-        if content_xp is not None and content_xp != '':
-            content = "".join(response.xpath(content_xp).getall())
-
-        if images_xp is not None and images_xp != '':
-            image_sources = response.xpath(images_xp).getall()
-
-        if videos_xp is not None and videos_xp != '':
-            video_sources = response.xpath(videos_xp).getall()
-
-        if share_content_xp is not None and share_content_xp != '':
-            share_content = response.xpath(share_content_xp).getall()
-
-        if tag_xp is not None and tag_xp != '':
-            tag = ",".join(response.xpath(tag_xp).getall())
-
-        if author_xp is not None and author_xp != '':
-            author = response.xpath(author_xp).get()
-
-        if raw_html_xp is not None and raw_html_xp != '':
-            raw_html = response.xpath(raw_html_xp).getall()
-
     except Exception as e:
         print("Parse error : " + str(e))
+        published_time = ''
+
+    try:
+        datetime.strptime(published_time + " 00:00:00", "%d-%m-%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+        published_time = published_time + " 00:00:00"
+    except Exception as e:
+        print("Parse : " + str(e))
+
+    if all_links_xp is not None and all_links_xp != '':
+        all_links = response.xpath(all_links_xp).getall()
+
+    if all_subs_xp is not None and all_subs_xp != '':
+        all_subs = response.xpath(all_subs_xp).getall()
+
+    if content_xp is not None and content_xp != '':
+        content = "".join(response.xpath(content_xp).getall())
+
+    if images_xp is not None and images_xp != '':
+        image_sources = response.xpath(images_xp).getall()
+
+    if videos_xp is not None and videos_xp != '':
+        video_sources = response.xpath(videos_xp).getall()
+
+    if share_content_xp is not None and share_content_xp != '':
+        share_content = response.xpath(share_content_xp).getall()
+
+    if tag_xp is not None and tag_xp != '':
+        tag = ",".join(response.xpath(tag_xp).getall())
+
+    if author_xp is not None and author_xp != '':
+        author = response.xpath(author_xp).get()
+
+    if raw_html_xp is not None and raw_html_xp != '':
+        raw_html = response.xpath(raw_html_xp).getall()
 
     parsed_item = {
         'raw_url': url,
