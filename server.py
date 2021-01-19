@@ -79,7 +79,7 @@ def parse():
     if title == '':
         title = response.xpath("//title/text()").get()
     if description == '':
-        description = response.xpath("//meta[@name='description']/@content").get()
+        description = response.xpath("//meta[@name='description' or @name='Description']/@content").get()
 
     if published_time == '':
         time = response.xpath(

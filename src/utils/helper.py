@@ -115,13 +115,22 @@ def normalize_published_date(d):
                             "%Y/%m/%d %H:%M:%S")
                         return date_time_obj
                     elif len(split3) == 3:
-                        # 6:37 PM, 04/12/2020
-                        date_str = split3[2].strip()
-                        time_str = split3[0].strip() + ":00"
-                        date_time_str = date_str + " " + time_str
-                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
-                            "%Y/%m/%d %H:%M:%S")
-                        return date_time_obj
+                        try:
+                            # 6:37 PM, 04/12/2020
+                            date_str = split3[2].strip()
+                            time_str = split3[0].strip() + ":00"
+                            date_time_str = date_str + " " + time_str
+                            date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                                "%Y/%m/%d %H:%M:%S")
+                            return date_time_obj
+                        except:
+                            # Thứ tư, 13/01/2021 15:42
+                            date_str = split[1][:11].strip()
+                            time_str = split3[2].strip() + ":00"
+                            date_time_str = date_str + " " + time_str
+                            date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                                "%Y/%m/%d %H:%M:%S")
+                            return date_time_obj
                     elif len(split3) == 5:
                         try:
                             # 11:09 | Thứ bảy, 12/12/2020
@@ -198,15 +207,14 @@ def normalize_published_date(d):
                     date_time_str = date_str + " " + time_str
                     date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
                     return date_time_obj
-                except Exception as e:
-                    print(str(e))
+                except:
                     try:
                         # Chủ nhật, 03.01.2021 | 10:00:41
                         split3 = split[1].split("|")
                         date_str = split3[0].strip()
                         time_str = split3[1].strip()
                         date_time_str = date_str + " " + time_str
-                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                        date_time_obj = datetime.strptime(date_time_str, "%d.%m.%Y %H:%M:%S").strftime(
                             "%Y/%m/%d %H:%M:%S")
                         return date_time_obj
                     except:
@@ -281,12 +289,22 @@ def normalize_published_date(d):
                     date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
                     return date_time_obj
                 except:
-                    # Đăng lúc: 08/12/2020 11:30 (GMT+7)
-                    date_str = (split2[2]).strip()
-                    time_str = (split2[3] + ":00").strip()
-                    date_time_str = date_str + " " + time_str
-                    date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
-                    return date_time_obj
+                    try:
+                        # Đăng lúc: 08/12/2020 11:30 (GMT+7)
+                        date_str = (split2[2]).strip()
+                        time_str = (split2[3] + ":00").strip()
+                        date_time_str = date_str + " " + time_str
+                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                            "%Y/%m/%d %H:%M:%S")
+                        return date_time_obj
+                    except:
+                        # Xuất bản: 22:42 18/02/2020 [GMT+7]
+                        date_str = split2[3].strip()
+                        time_str = (split2[2] + ":00").strip()
+                        date_time_str = date_str + " " + time_str
+                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                            "%Y/%m/%d %H:%M:%S")
+                        return date_time_obj
             elif len(split2) == 4:
                 split3 = d.split("-")
                 if len(split3) == 4:
