@@ -199,6 +199,14 @@ def normalize_published_date(d):
                             date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
                                 "%Y/%m/%d %H:%M:%S")
                             return date_time_obj
+                    elif len(split3) == 8:
+                        # Thứ hai, 25/1/2021 |  10:12  GMT+7
+                        date_str = split3[2].strip()
+                        time_str = split3[5].strip() + ":00"
+                        date_time_str = date_str + " " + time_str
+                        date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime(
+                            "%Y/%m/%d %H:%M:%S")
+                        return date_time_obj
             elif len(split2) == 3:
                 try:
                     # 17:03:00 - Thứ 2, 07/12/2020                     |
