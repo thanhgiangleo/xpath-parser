@@ -267,12 +267,20 @@ def normalize_published_date(d):
         elif len(split) == 1:
             split2 = d.strip().split(" ")
             if len(split2) == 7:
-                # Cập nhật ngày: 10/12/2020 22:14 (GMT +7)
-                date_str = (split2[3]).strip()
-                time_str = (split2[4] + ":00").strip()
-                date_time_str = date_str + " " + time_str
-                date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
-                return date_time_obj
+                try:
+                    # Cập nhật ngày: 10/12/2020 22:14 (GMT +7)
+                    date_str = (split2[3]).strip()
+                    time_str = (split2[4] + ":00").strip()
+                    date_time_str = date_str + " " + time_str
+                    date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+                    return date_time_obj
+                except:
+                    # 26 tháng 01 năm 2021 11:07 GMT+7
+                    date_str = split2[0] + "/" + split2[2] + "/" + split2[4]
+                    time_str = (split2[5] + ":00").strip()
+                    date_time_str = date_str + " " + time_str
+                    date_time_obj = datetime.strptime(date_time_str, "%d/%m/%Y %H:%M:%S").strftime("%Y/%m/%d %H:%M:%S")
+                    return date_time_obj
             elif len(split2) == 6:
                 try:
                     # Thứ Tư 25/11/2020 | 17:07 GMT+7
@@ -447,13 +455,18 @@ def normalize_published_date(d):
                             "%Y/%m/%d %H:%M:%S")
                         return date_time_obj
                     except:
-                        # 2020-11-21 09:13:15
-                        time_str = (split2[1]).strip()
-                        date_str = (split2[0]).strip()
-                        date_time_str = date_str + " " + time_str
-                        date_time_obj = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S").strftime(
-                            "%Y/%m/%d %H:%M:%S")
-                        return date_time_obj
+                        try:
+                            # 2020-11-21 09:13:15
+                            time_str = (split2[1]).strip()
+                            date_str = (split2[0]).strip()
+                            date_time_str = date_str + " " + time_str
+                            date_time_obj = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S").strftime(
+                                "%Y/%m/%d %H:%M:%S")
+                            return date_time_obj
+                        except:
+                            # 2021-01-26 08:01:00.0
+                            date_time_obj = datetime.strptime(d, "%Y-%m-%d %H:%M:%S.%f").strftime("%Y/%m/%d %H:%M:%S")
+                            return date_time_obj
                 elif len(split3) == 4:
                     # 11-1-2021 19:15:56+07:00
                     time_str = (split2[1][:8]).strip()
@@ -586,6 +599,8 @@ def normalize_whole_item(item):
     for sc_resource in item['share_content']:
         if sc_resource == '':
             continue
+        if sc_resource.startswith('//'):
+            sc_resource = sc_resource.replace('//', '')
         if sc_resource.startswith('/'):
             sc_resource = f'{domain}{sc_resource}'
         if 'https://' not in sc_resource and 'http://' not in sc_resource:
@@ -599,6 +614,8 @@ def normalize_whole_item(item):
         img_resource = img_resource.strip()
         if img_resource == '':
             continue
+        if img_resource.startswith('//'):
+            img_resource = img_resource.replace('//', '')
         if img_resource.find(domain) == -1:
             if img_resource.startswith('/'):
                 img_resource = f'{domain}{img_resource}'
