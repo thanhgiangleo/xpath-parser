@@ -66,6 +66,8 @@ def normalize_author_display_name(name):
 
 def normalize_published_date(d):
     if d:
+        if d.strip().startswith("-"):
+            d = d.replace("-", " ")
         split = d.split(",")
         if len(split) == 3:
             split2 = d.split(":")

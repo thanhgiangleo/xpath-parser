@@ -49,7 +49,6 @@ def submit_pg():
 @app.route("/parse", methods=['POST'])
 def parse():
     image_sources, video_sources, share_content, content, tag, author, raw_html = [], [], [], '', '', '', []
-    domain, title, description, published_time = '', '', '', ''
     all_links, all_subs = [], []
 
     url = request.form.get('url')
